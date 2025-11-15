@@ -1,10 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import Papa from 'papaparse';
 import { schoolDb, militaryBaseDb, aeaMemberDb, initDatabase } from '../src/services/database';
 import { geocodeBatch } from '../src/services/geocoding';
-
-const __dirname = path.join(process.cwd(), 'backend/scripts');
 
 // Helper function to read and parse CSV
 function readCSV(filePath) {
@@ -86,7 +85,8 @@ async function loadSampleData() {
     initDatabase();
     console.log('✅ Database initialized\n');
 
-    const sampleDataDir = path.join(__dirname, '../../sample-data');
+    // Sample data is in the project root, not in backend
+    const sampleDataDir = path.join(process.cwd(), '../sample-data');
 
     // Load Schools
     console.log('🏫 Loading schools...');
