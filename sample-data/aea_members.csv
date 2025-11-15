@@ -1,0 +1,16 @@
+name,shopType,address,city,state,zipCode,email,phone,poc,website,certifications
+Duncan Aviation,MRO,3701 Aviation Rd,Lincoln,NE,68524,info@duncanaviation.com,402-475-2611,Robert Duncan,https://www.duncanaviation.com,CRS DKSR172D
+StandardAero,MRO,8802 E 34th St N,Wichita,KS,67226,info@standardaero.com,316-440-2600,Sarah Johnson,https://www.standardaero.com,CRS STAS245K
+Aviation Specialties Unlimited,Repair Station,4632 W Aeronca St,Boise,ID,83705,sales@asu.aero,208-389-9658,Mike Anderson,https://www.asu.aero,CRS ASUR561L
+AAR Corp,MRO,1100 N Wood Dale Rd,Wood Dale,IL,60191,contact@aarcorp.com,630-227-2000,Jennifer Smith,https://www.aarcorp.com,CRS AARR982C
+Textron Aviation,OEM,9709 E Central Ave,Wichita,KS,67206,support@txtav.com,316-517-6000,David Martinez,https://www.txtav.com,CRS TXTV123A
+Flying Colors Corp,Repair Station,N4798 County Rd C,Benton,WI,53803,info@flyingcolors.aero,608-759-3601,Lisa Thompson,https://www.flyingcolors.aero,CRS FLCR443B
+Jet Aviation,MRO,101 Jet Aviation Dr,Teterboro,NJ,07608,teterboro@jetaviation.com,201-288-3700,Michael Chen,https://www.jetaviation.com,CRS JTAV789D
+West Star Aviation,MRO,2575 CR 59,Grand Junction,CO,81505,info@weststaraviation.com,970-243-7600,Amanda Foster,https://www.weststaraviation.com,CRS WSTR334E
+Gulfstream Aerospace,OEM,500 Gulfstream Rd,Savannah,GA,31407,customerservice@gulfstream.com,912-965-3000,Mark Williams,https://www.gulfstream.com,CRS GLFM567F
+Signature Aviation,MRO,5455 Airport Blvd,Orlando,FL,32812,orlando@signatureaviation.com,407-855-0451,Patricia Lee,https://www.signatureaviation.com,CRS SIGN891G
+Embraer Services,OEM,277 Martim Francisco Ave,Fort Lauderdale,FL,33315,services@embraer.com,954-359-3700,Robert Garcia,https://www.embraer.com,CRS EMBR223H
+Stevens Aerospace,MRO,1 Stevens Dr,Greenville,SC,29607,info@stevensaerospace.com,864-877-8700,Emily Rodriguez,https://www.stevensaerospace.com,CRS STEV445I
+Constant Aviation,MRO,4141 Agar Dr,Richmond,VA,23222,info@constantaviation.com,804-222-5200,James Parker,https://www.constantaviation.com,CRS CNST667J
+Premier Jet Center,Repair Station,14201 SW 139th Ct,Miami,FL,33186,service@premierjet.com,305-233-4359,Michelle Davis,https://www.premierjet.com,CRS PRMJ778K
+Pacific Coast Avionics,Repair Station,3550 John Glenn Dr,Livermore,CA,94550,sales@pcavionics.com,925-443-3600,Daniel Wilson,https://www.pcavionics.com,CRS PCAV889L

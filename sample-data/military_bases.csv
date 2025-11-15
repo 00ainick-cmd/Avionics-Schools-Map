@@ -1,0 +1,11 @@
+name,branch,address,city,state,zipCode,email,phone,poc,website,readinessCenterUrl,hasAvionicsTechs
+Tinker Air Force Base,Air Force,7437 Arnold St,Oklahoma City,OK,73145,tinker.info@us.af.mil,405-739-2011,Col. Sarah Mitchell,https://www.tinker.af.mil,https://www.tinker.af.mil/Resources/Family-Readiness,true
+Naval Air Station Pensacola,Navy,190 Radford Blvd,Pensacola,FL,32508,naspcola.pao@navy.mil,850-452-0111,Capt. James Wilson,https://www.cnic.navy.mil/pensacola,https://www.cnic.navy.mil/pensacola/ffr,true
+Joint Base San Antonio,Air Force,1701 Kenly Ave,San Antonio,TX,78234,jbsa.info@us.af.mil,210-671-1110,Col. Michael Rodriguez,https://www.jbsa.mil,https://www.jbsa.mil/Resources/Family-Programs,true
+Naval Air Station Oceana,Navy,1878 Tomcat Blvd,Virginia Beach,VA,23460,oceana.pao@navy.mil,757-433-2366,Capt. Robert Davis,https://www.cnic.navy.mil/oceana,https://www.cnic.navy.mil/oceana/ffr,true
+Hill Air Force Base,Air Force,7274 Wardleigh Rd,Hill AFB,UT,84056,hill.info@us.af.mil,801-777-7221,Col. Jennifer Thompson,https://www.hill.af.mil,https://www.hill.af.mil/Resources/Airman-Family-Readiness,true
+Marine Corps Air Station Miramar,Marines,535 Miramar Way,San Diego,CA,92145,miramar.pao@usmc.mil,858-577-1011,Col. David Anderson,https://www.miramar.marines.mil,https://www.miramar.marines.mil/Resources/MCCS,true
+Nellis Air Force Base,Air Force,4430 Grissom Ave,Las Vegas,NV,89191,nellis.info@us.af.mil,702-652-1110,Col. Patricia Garcia,https://www.nellis.af.mil,https://www.nellis.af.mil/Resources/Airman-Family,true
+Naval Air Station Jacksonville,Navy,542 Chambers Ave,Jacksonville,FL,32212,nasjax.pao@navy.mil,904-542-2345,Capt. William Chen,https://www.cnic.navy.mil/jacksonville,https://www.cnic.navy.mil/jacksonville/ffr,true
+Luke Air Force Base,Air Force,14185 Falcon St,Glendale,AZ,85309,luke.info@us.af.mil,623-856-6011,Col. Amanda Foster,https://www.luke.af.mil,https://www.luke.af.mil/Resources/Airman-Family,true
+Marine Corps Air Station Cherry Point,Marines,464 Roberts Rd,Havelock,NC,28532,cherrypoint.pao@usmc.mil,252-466-2811,Col. Mark Stevens,https://www.cherrypoint.marines.mil,https://www.cherrypoint.marines.mil/Resources,true
