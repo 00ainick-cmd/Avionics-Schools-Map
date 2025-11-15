@@ -7,9 +7,15 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
+    "load-sample-data": "tsx scripts/load-sample-data.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["avionics", "schools", "map", "AEA"],
+  "keywords": [
+    "avionics",
+    "schools",
+    "map",
+    "AEA"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -17,7 +23,8 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "papaparse": "^5.5.3"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
