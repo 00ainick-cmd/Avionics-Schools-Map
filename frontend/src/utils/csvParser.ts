@@ -1,5 +1,5 @@
 import Papa from 'papaparse';
-import { School, MilitaryBase, AEAMember } from '../types';
+import type { School, MilitaryBase, AEAMember } from '../types';
 
 export interface ParseResult<T> {
   data: T[];
