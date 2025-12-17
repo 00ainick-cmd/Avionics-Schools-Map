@@ -1,17 +1,37 @@
-import React, { useMemo } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useMemo, useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { School, MilitaryBase, AEAMember, EntityType } from '../types';
+import type { School, MilitaryBase, AEAMember, EntityType } from '../types';
+
+// Extended types with distance
+interface SchoolWithDistance extends School {
+  distance: number | null;
+}
+
+interface MilitaryBaseWithDistance extends MilitaryBase {
+  distance: number | null;
+}
+
+interface AEAMemberWithDistance extends AEAMember {
+  distance: number | null;
+}
+
+interface ReferencePoint {
+  lat: number;
+  lng: number;
+  label: string;
+}
 
 interface Props {
-  schools: School[];
-  militaryBases: MilitaryBase[];
-  aeaMembers: AEAMember[];
+  schools: SchoolWithDistance[];
+  militaryBases: MilitaryBaseWithDistance[];
+  aeaMembers: AEAMemberWithDistance[];
   filters: {
     entityTypes: EntityType[];
     schoolTypes: School['type'][];
     searchQuery: string;
   };
+  referencePoint?: ReferencePoint | null;
 }
 
 // Custom marker icons
@@ -45,6 +65,27 @@ const createMarkerIcon = (color: string, symbol: string) => {
   });
 };
 
+// Reference point marker (star icon)
+const referencePointIcon = L.divIcon({
+  className: 'reference-marker',
+  html: `
+    <div style="
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    ">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="#DC2626" stroke="white" stroke-width="1.5">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+      </svg>
+    </div>
+  `,
+  iconSize: [40, 40],
+  iconAnchor: [20, 20],
+  popupAnchor: [0, -20],
+});
+
 const schoolIcon = createMarkerIcon('#3B82F6', 'S');
 const militaryIcon = createMarkerIcon('#EF4444', 'M');
 const aeaIcon = createMarkerIcon('#10B981', 'A');
@@ -60,7 +101,25 @@ const getSchoolColor = (type: School['type']) => {
   }
 };
 
-export default function MapView({ schools, militaryBases, aeaMembers, filters }: Props) {
+// Format distance for display
+const formatDistance = (distance: number | null): string => {
+  if (distance === null) return '';
+  if (distance < 1) return `${(distance * 5280).toFixed(0)} ft`;
+  return `${distance.toFixed(1)} mi`;
+};
+
+// Component to handle map view changes
+function MapController({ center, zoom }: { center: [number, number]; zoom: number }) {
+  const map = useMap();
+
+  useEffect(() => {
+    map.setView(center, zoom);
+  }, [map, center, zoom]);
+
+  return null;
+}
+
+export default function MapView({ schools, militaryBases, aeaMembers, filters, referencePoint }: Props) {
   // Filter and prepare markers
   const markers = useMemo(() => {
     const result: Array<{
@@ -68,7 +127,7 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters }:
       lat: number;
       lng: number;
       type: EntityType;
-      data: School | MilitaryBase | AEAMember;
+      data: SchoolWithDistance | MilitaryBaseWithDistance | AEAMemberWithDistance;
     }> = [];
 
     // Filter schools
@@ -135,38 +194,91 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters }:
     return result;
   }, [schools, militaryBases, aeaMembers, filters]);
 
-  // Calculate center and zoom based on markers
-  const mapCenter: [number, number] = useMemo(() => {
-    if (markers.length === 0) return [39.8283, -98.5795]; // Center of USA
+  // Calculate center and zoom based on markers or reference point
+  const { mapCenter, mapZoom } = useMemo(() => {
+    // If reference point exists, center on it
+    if (referencePoint) {
+      return {
+        mapCenter: [referencePoint.lat, referencePoint.lng] as [number, number],
+        mapZoom: 8,
+      };
+    }
+
+    // Otherwise, center on markers
+    if (markers.length === 0) {
+      return {
+        mapCenter: [39.8283, -98.5795] as [number, number], // Center of USA
+        mapZoom: 4,
+      };
+    }
 
     const avgLat = markers.reduce((sum, m) => sum + m.lat, 0) / markers.length;
     const avgLng = markers.reduce((sum, m) => sum + m.lng, 0) / markers.length;
 
-    return [avgLat, avgLng];
-  }, [markers]);
+    return {
+      mapCenter: [avgLat, avgLng] as [number, number],
+      mapZoom: 4,
+    };
+  }, [markers, referencePoint]);
 
   return (
     <div className="h-full w-full">
       <MapContainer
         center={mapCenter}
-        zoom={4}
+        zoom={mapZoom}
         className="h-full w-full rounded-lg shadow-md"
       >
+        <MapController center={mapCenter} zoom={mapZoom} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
+        {/* Reference Point Marker */}
+        {referencePoint && (
+          <>
+            <Marker
+              position={[referencePoint.lat, referencePoint.lng]}
+              icon={referencePointIcon}
+              zIndexOffset={1000}
+            >
+              <Popup>
+                <div className="p-2 text-center">
+                  <p className="font-bold text-red-600">Your Location</p>
+                  <p className="text-sm text-gray-600">{referencePoint.label}</p>
+                </div>
+              </Popup>
+            </Marker>
+            {/* Optional: show a circle for context */}
+            <Circle
+              center={[referencePoint.lat, referencePoint.lng]}
+              radius={8047} // 5 miles in meters
+              pathOptions={{
+                color: '#DC2626',
+                fillColor: '#DC2626',
+                fillOpacity: 0.05,
+                weight: 1,
+                dashArray: '5, 5',
+              }}
+            />
+          </>
+        )}
 
         {markers.map(marker => {
           let icon = schoolIcon;
           let popupContent;
 
           if (marker.type === 'school') {
-            const school = marker.data as School;
+            const school = marker.data as SchoolWithDistance;
             icon = createMarkerIcon(getSchoolColor(school.type), 'S');
             popupContent = (
               <div className="p-2 min-w-[250px]">
                 <h3 className="font-bold text-lg mb-2 text-gray-800">{school.name}</h3>
+                {school.distance !== null && (
+                  <p className="text-sm font-semibold text-blue-600 mb-2 bg-blue-50 px-2 py-1 rounded inline-block">
+                    {formatDistance(school.distance)} away
+                  </p>
+                )}
                 <p className="text-sm text-gray-600 mb-2">
                   <span className="font-semibold">Type:</span> {school.type}
                 </p>
@@ -211,11 +323,16 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters }:
               </div>
             );
           } else if (marker.type === 'military') {
-            const base = marker.data as MilitaryBase;
+            const base = marker.data as MilitaryBaseWithDistance;
             icon = militaryIcon;
             popupContent = (
               <div className="p-2 min-w-[250px]">
                 <h3 className="font-bold text-lg mb-2 text-gray-800">{base.name}</h3>
+                {base.distance !== null && (
+                  <p className="text-sm font-semibold text-red-600 mb-2 bg-red-50 px-2 py-1 rounded inline-block">
+                    {formatDistance(base.distance)} away
+                  </p>
+                )}
                 <p className="text-sm text-gray-600 mb-2">
                   <span className="font-semibold">Branch:</span> {base.branch}
                 </p>
@@ -272,11 +389,16 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters }:
               </div>
             );
           } else {
-            const member = marker.data as AEAMember;
+            const member = marker.data as AEAMemberWithDistance;
             icon = aeaIcon;
             popupContent = (
               <div className="p-2 min-w-[250px]">
                 <h3 className="font-bold text-lg mb-2 text-gray-800">{member.name}</h3>
+                {member.distance !== null && (
+                  <p className="text-sm font-semibold text-green-600 mb-2 bg-green-50 px-2 py-1 rounded inline-block">
+                    {formatDistance(member.distance)} away
+                  </p>
+                )}
                 <p className="text-sm text-gray-600 mb-2">
                   <span className="font-semibold">Type:</span> {member.shopType}
                 </p>

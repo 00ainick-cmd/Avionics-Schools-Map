@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* Leaflet CSS - required for maps */
 @import 'leaflet/dist/leaflet.css';

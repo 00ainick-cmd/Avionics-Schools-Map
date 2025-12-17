@@ -1,5 +1,5 @@
 import React from 'react';
-import { EntityType, School } from '../types';
+import type { EntityType, School } from '../types';
 
 interface Props {
   filters: {

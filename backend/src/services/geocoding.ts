@@ -44,7 +44,7 @@ export async function geocodeAddress(address: string, city: string, state: strin
       return null;
     }
 
-    const data = await response.json();
+    const data = await response.json() as Array<{ lat: string; lon: string; display_name: string }>;
 
     if (data && data.length > 0) {
       const result = data[0];

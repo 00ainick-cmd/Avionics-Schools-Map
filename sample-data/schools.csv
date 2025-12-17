@@ -1,16 +1,16 @@
-name,type,address,city,state,zipCode,email,phone,poc,website
-Spartan College of Aeronautics,Part 147,8820 E Pine St,Tulsa,OK,74115,admissions@spartan.edu,918-836-6886,John Anderson,https://www.spartan.edu
-Redstone College,Part 147,10851 W 120th Ave,Broomfield,CO,80021,info@redstone.edu,303-466-1714,Sarah Mitchell,https://www.redstone.edu
-Pittsburgh Institute of Aeronautics,Part 147,5 Allegheny County Airport,West Mifflin,PA,15122,admissions@pia.edu,412-346-2100,Michael Chen,https://www.pia.edu
-Hallmark University,Part 147,10401 IH 10 West,San Antonio,TX,78230,info@hallmarkuniversity.edu,210-690-9000,Lisa Rodriguez,https://www.hallmarkuniversity.edu
-National Aviation Academy,Part 147,2950 Bellflower Blvd,Tampa,FL,33619,admissions@naa.edu,727-531-3599,David Thompson,https://www.naa.edu
-Purdue University,4-Year Program,610 Purdue Mall,West Lafayette,IN,47907,aviation@purdue.edu,765-494-9000,Dr. James Wilson,https://www.purdue.edu/aviation
-Embry-Riddle Aeronautical University,4-Year Program,600 S Clyde Morris Blvd,Daytona Beach,FL,32114,admissions@erau.edu,386-226-6000,Dr. Emily Parker,https://www.erau.edu
-Arizona State University Polytechnic,4-Year Program,6073 S Backus Mall,Mesa,AZ,85212,aviation@asu.edu,480-727-1585,Dr. Robert Garcia,https://www.asu.edu
-Middle Tennessee State University,4-Year Program,1301 E Main St,Murfreesboro,TN,37132,aerospace@mtsu.edu,615-898-2788,Dr. Amanda Foster,https://www.mtsu.edu
-Vaughn College,Technical College,86-01 23rd Ave,Flushing,NY,11369,admissions@vaughn.edu,718-429-6600,Jennifer Lee,https://www.vaughn.edu
-Community College of Denver,Technical College,1070 Alton Way,Denver,CO,80230,aviation@ccd.edu,303-352-3000,Mark Stevens,https://www.ccd.edu/aviation
-Kent State University,Technical College,4350 Kent Rd,Stow,OH,44224,aviationtech@kent.edu,330-677-8845,Patricia Martinez,https://www.kent.edu/aviation
-Aviation High School,High School,45-30 36th St,Long Island City,NY,11101,info@aviationhs.org,718-482-4863,Principal Johnson,https://www.aviationhs.org
-Western Michigan Aviation Academy,High School,6351 S Zephyr Pl,Battle Creek,MI,49037,contact@wmaa.org,269-441-3000,Principal Davis,https://www.wmaa.org
-Sky View Academy,High School,6161 Business Center Dr,Highlands Ranch,CO,80130,info@skyviewacademy.org,720-886-9800,Principal Williams,https://www.skyviewacademy.org
+name,type,address,city,state,zipCode,latitude,longitude,email,phone,poc,website
+Spartan College of Aeronautics,Part 147,8820 E Pine St,Tulsa,OK,74115,36.1474,-95.9149,admissions@spartan.edu,918-836-6886,John Anderson,https://www.spartan.edu
+Redstone College,Part 147,10851 W 120th Ave,Broomfield,CO,80021,39.9146,-105.0569,info@redstone.edu,303-466-1714,Sarah Mitchell,https://www.redstone.edu
+Pittsburgh Institute of Aeronautics,Part 147,5 Allegheny County Airport,West Mifflin,PA,15122,40.3543,-79.9301,admissions@pia.edu,412-346-2100,Michael Roberts,https://www.pia.edu
+St. Philip's College Aviation,Technical College,10401 IH 10 West,San Antonio,TX,78230,29.5509,-98.6103,aviation@alamo.edu,210-486-2900,Maria Garcia,https://www.alamo.edu/spc
+Hillsborough Community College,Technical College,2950 Bellflower Blvd,Tampa,FL,33619,27.9656,-82.3882,aviation@hccfl.edu,813-253-7000,David Williams,https://www.hccfl.edu
+Purdue University Aviation,4-Year Program,610 Purdue Mall,West Lafayette,IN,47907,40.4237,-86.9212,aviation@purdue.edu,765-494-5782,Jennifer Thompson,https://www.purdue.edu/aviation
+Embry-Riddle Aeronautical University,4-Year Program,600 S Clyde Morris Blvd,Daytona Beach,FL,32114,29.1878,-81.0479,admissions@erau.edu,386-226-6100,Robert Martinez,https://www.erau.edu
+Arizona State University - Polytechnic,4-Year Program,6073 S Backus Mall,Mesa,AZ,85212,33.3058,-111.6803,aviation@asu.edu,480-727-1585,Lisa Chen,https://poly.engineering.asu.edu
+Middle Tennessee State University,4-Year Program,1301 E Main St,Murfreesboro,TN,37132,35.8492,-86.3688,aerospace@mtsu.edu,615-898-2788,Christopher Lee,https://www.mtsu.edu/aerospace
+Vaughn College,Part 147,86-01 23rd Ave,Flushing,NY,11369,40.7726,-73.8747,admissions@vaughn.edu,718-429-6600,Anthony Brown,https://www.vaughn.edu
+Emily Griffith Technical College,Technical College,1070 Alton Way,Denver,CO,80230,39.7298,-104.9378,aviation@emilygriffith.edu,720-423-4700,Patricia Davis,https://www.emilygriffith.edu
+Akron Schools Aviation Program,High School,4350 Kent Rd,Stow,OH,44224,41.1609,-81.4415,aviation@stow.k12.oh.us,330-689-5445,James Wilson,https://www.stow.k12.oh.us
+Aviation High School,High School,45-30 36th St,Long Island City,NY,11101,40.7484,-73.9361,info@aviationhs.net,718-786-0110,Nancy Taylor,https://www.aviationhs.net
+WK Kellogg Airport High School,High School,6351 S Zephyr Pl,Battle Creek,MI,49037,42.3081,-85.2505,aviation@bcps.k12.mi.us,269-965-9500,Thomas Moore,https://www.bcps.k12.mi.us
+Colorado Aeronautical Academy,High School,6161 Business Center Dr,Highlands Ranch,CO,80130,39.5498,-104.9729,info@coloradoaero.org,303-708-1855,Sandra Jackson,https://www.coloradoaero.org
