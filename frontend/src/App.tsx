@@ -1,9 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import MapView from './components/MapView';
 import FilterPanel from './components/FilterPanel';
-import CSVUploader from './components/CSVUploader';
-import { schoolsApi, militaryApi, aeaApi } from './services/api';
 import type { School, MilitaryBase, AEAMember, EntityType } from './types';
+import { staticSchools, staticMilitaryBases, staticAEAMembers } from './staticData';
 import './index.css';
 
 // Distance calculation using Haversine formula
@@ -26,15 +25,13 @@ interface ReferencePoint {
 }
 
 function App() {
-  // Data state
+  // Data state - loaded from static data
   const [schools, setSchools] = useState<School[]>([]);
   const [militaryBases, setMilitaryBases] = useState<MilitaryBase[]>([]);
   const [aeaMembers, setAEAMembers] = useState<AEAMember[]>([]);
 
   // UI state
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [showUploader, setShowUploader] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
   // Filter state
@@ -51,30 +48,16 @@ function App() {
   const [isGeolocating, setIsGeolocating] = useState(false);
   const [geoError, setGeoError] = useState<string | null>(null);
 
-  // Fetch all data
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const [schoolsData, militaryData, aeaData] = await Promise.all([
-        schoolsApi.getAll(),
-        militaryApi.getAll(),
-        aeaApi.getAll(),
-      ]);
-      setSchools(schoolsData);
-      setMilitaryBases(militaryData);
-      setAEAMembers(aeaData);
-    } catch (err: any) {
-      console.error('Failed to fetch data:', err);
-      setError(err.message || 'Failed to load data. Make sure the backend server is running.');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
+  // Load static data on mount
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    // Small delay to show loading state
+    setTimeout(() => {
+      setSchools(staticSchools);
+      setMilitaryBases(staticMilitaryBases);
+      setAEAMembers(staticAEAMembers);
+      setLoading(false);
+    }, 500);
+  }, []);
 
   // Geocode address to coordinates
   const geocodeAddress = async (address: string) => {
@@ -95,7 +78,7 @@ function App() {
       } else {
         setGeoError('Location not found. Try a city, state, or zip code.');
       }
-    } catch (err) {
+    } catch {
       setGeoError('Failed to search location. Please try again.');
     } finally {
       setIsGeolocating(false);
@@ -192,12 +175,6 @@ function App() {
                 className="px-4 py-2 bg-blue-700 hover:bg-blue-900 rounded-lg text-sm font-medium transition-colors"
               >
                 {showHelp ? 'Hide Help' : 'How to Use'}
-              </button>
-              <button
-                onClick={() => setShowUploader(!showUploader)}
-                className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-sm font-medium transition-colors"
-              >
-                {showUploader ? 'Hide Upload' : 'Upload Data'}
               </button>
             </div>
           </div>
@@ -357,11 +334,6 @@ function App() {
             </div>
           </div>
 
-          {/* CSV Uploader */}
-          {showUploader && (
-            <CSVUploader onUploadSuccess={fetchData} />
-          )}
-
           {/* Filters */}
           <FilterPanel
             filters={filters}
@@ -382,31 +354,6 @@ function App() {
                 <p className="text-gray-600">Loading map data...</p>
               </div>
             </div>
-          ) : error ? (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 p-8">
-              <div className="bg-white rounded-lg shadow-lg p-8 max-w-md text-center">
-                <svg className="h-16 w-16 mx-auto mb-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">Connection Error</h3>
-                <p className="text-gray-600 mb-4">{error}</p>
-                <div className="space-y-2 text-sm text-gray-500 text-left bg-gray-50 p-4 rounded-lg mb-4">
-                  <p className="font-medium">Quick Fix:</p>
-                  <ol className="list-decimal list-inside space-y-1">
-                    <li>Open a terminal in the project folder</li>
-                    <li>Run: <code className="bg-gray-200 px-1 rounded">cd backend && npm run dev</code></li>
-                    <li>Wait for "Server running on port 3001"</li>
-                    <li>Refresh this page</li>
-                  </ol>
-                </div>
-                <button
-                  onClick={fetchData}
-                  className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium"
-                >
-                  Retry Connection
-                </button>
-              </div>
-            </div>
           ) : (
             <MapView
               schools={filteredSchools}
@@ -418,7 +365,7 @@ function App() {
           )}
 
           {/* Stats Overlay */}
-          {!loading && !error && (
+          {!loading && (
             <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur rounded-lg shadow-lg px-4 py-3">
               <div className="flex items-center gap-4 text-sm">
                 <div className="flex items-center gap-2">
