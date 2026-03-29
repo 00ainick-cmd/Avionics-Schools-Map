@@ -39,6 +39,7 @@ function App() {
     entityTypes: ['school', 'military', 'aea'] as EntityType[],
     schoolTypes: [] as School['type'][],
     searchQuery: '',
+    hiringOnly: false,
   });
 
   // Proximity search state
@@ -153,9 +154,69 @@ function App() {
     ? militaryWithDistance.filter(b => b.distance !== null && b.distance <= radiusFilter)
     : militaryWithDistance;
 
-  const filteredAEA = radiusFilter
+  const filteredAEAByRadius = radiusFilter
     ? aeaWithDistance.filter(a => a.distance !== null && a.distance <= radiusFilter)
     : aeaWithDistance;
+
+  // Apply hiring filter for AEA members
+  const filteredAEA = filters.hiringOnly
+    ? filteredAEAByRadius.filter(a => a.hiringNow)
+    : filteredAEAByRadius;
+
+  // Export filtered results as CSV
+  const exportToCSV = () => {
+    const rows: string[] = [];
+
+    // Header row
+    rows.push('Type,Name,Address,City,State,Zip,Phone,Email,Website,Distance (mi),Additional Info');
+
+    // Schools
+    if (filters.entityTypes.includes('school')) {
+      filteredSchools.forEach(s => {
+        const additionalInfo = [
+          s.type,
+          s.annualGraduates ? `${s.annualGraduates} graduates/year` : '',
+          s.placementRate ? `${s.placementRate}% placement` : '',
+          s.programSpecializations || ''
+        ].filter(Boolean).join('; ');
+        rows.push(`School,"${s.name}","${s.address}","${s.city}","${s.state}","${s.zipCode}","${s.phone || ''}","${s.email || ''}","${s.website || ''}","${s.distance?.toFixed(1) || ''}","${additionalInfo}"`);
+      });
+    }
+
+    // Military Bases
+    if (filters.entityTypes.includes('military')) {
+      filteredMilitary.forEach(b => {
+        const additionalInfo = `${b.branch}; Has Avionics Techs: ${b.hasAvionicsTechs ? 'Yes' : 'No'}`;
+        rows.push(`Military,"${b.name}","${b.address}","${b.city}","${b.state}","${b.zipCode}","${b.phone || ''}","${b.email || ''}","${b.website || ''}","${b.distance?.toFixed(1) || ''}","${additionalInfo}"`);
+      });
+    }
+
+    // AEA Members
+    if (filters.entityTypes.includes('aea')) {
+      filteredAEA.forEach(a => {
+        const additionalInfo = [
+          a.shopType,
+          a.employeeCount ? `${a.employeeCount} employees` : '',
+          a.hiringNow ? 'HIRING' : '',
+          a.offersInternships ? 'Offers Internships' : '',
+          a.typicalPositions || ''
+        ].filter(Boolean).join('; ');
+        rows.push(`AEA Member,"${a.name}","${a.address}","${a.city}","${a.state}","${a.zipCode}","${a.phone || ''}","${a.email || ''}","${a.website || ''}","${a.distance?.toFixed(1) || ''}","${additionalInfo}"`);
+      });
+    }
+
+    // Create and download CSV
+    const csvContent = rows.join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `aviation-map-export-${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -170,6 +231,16 @@ function App() {
               </p>
             </div>
             <div className="flex gap-3">
+              <button
+                onClick={exportToCSV}
+                disabled={loading}
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-green-300 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+              >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Export List
+              </button>
               <button
                 onClick={() => setShowHelp(!showHelp)}
                 className="px-4 py-2 bg-blue-700 hover:bg-blue-900 rounded-lg text-sm font-medium transition-colors"

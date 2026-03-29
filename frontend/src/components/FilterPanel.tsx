@@ -6,11 +6,13 @@ interface Props {
     entityTypes: EntityType[];
     schoolTypes: School['type'][];
     searchQuery: string;
+    hiringOnly: boolean;
   };
   onFilterChange: (filters: {
     entityTypes: EntityType[];
     schoolTypes: School['type'][];
     searchQuery: string;
+    hiringOnly: boolean;
   }) => void;
   counts: {
     schools: number;
@@ -43,7 +45,12 @@ export default function FilterPanel({ filters, onFilterChange, counts }: Props) 
       entityTypes: ['school', 'military', 'aea'],
       schoolTypes: [],
       searchQuery: '',
+      hiringOnly: false,
     });
+  };
+
+  const toggleHiringOnly = () => {
+    onFilterChange({ ...filters, hiringOnly: !filters.hiringOnly });
   };
 
   return (
@@ -135,6 +142,29 @@ export default function FilterPanel({ filters, onFilterChange, counts }: Props) 
                 <span className="text-sm text-gray-700">{type}</span>
               </label>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* HR Filters */}
+      {filters.entityTypes.includes('aea') && (
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Job Seekers
+          </label>
+          <div className="space-y-2">
+            <label className="flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={filters.hiringOnly}
+                onChange={toggleHiringOnly}
+                className="mr-2 h-4 w-4 text-green-600 rounded focus:ring-green-500"
+              />
+              <span className="flex items-center text-sm text-gray-700">
+                <span className="bg-green-500 text-white text-xs px-1.5 py-0.5 rounded mr-2">HIRING</span>
+                Show Only Hiring
+              </span>
+            </label>
           </div>
         </div>
       )}

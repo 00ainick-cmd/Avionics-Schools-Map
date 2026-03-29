@@ -15,7 +15,11 @@ export const staticSchools: School[] = [
     email: "admissions@spartan.edu",
     phone: "918-836-6886",
     poc: "John Anderson",
-    website: "https://www.spartan.edu"
+    website: "https://www.spartan.edu",
+    annualGraduates: 450,
+    programSpecializations: "Airframe, Powerplant, Avionics",
+    placementRate: 92,
+    accreditation: "FAA Part 147, ACCSC"
   },
   {
     id: 2,
@@ -30,7 +34,11 @@ export const staticSchools: School[] = [
     email: "info@redstone.edu",
     phone: "303-466-1714",
     poc: "Sarah Mitchell",
-    website: "https://www.redstone.edu"
+    website: "https://www.redstone.edu",
+    annualGraduates: 280,
+    programSpecializations: "Airframe, Powerplant",
+    placementRate: 89,
+    accreditation: "FAA Part 147, ACCSC"
   },
   {
     id: 3,
@@ -45,7 +53,11 @@ export const staticSchools: School[] = [
     email: "admissions@pia.edu",
     phone: "412-346-2100",
     poc: "Michael Roberts",
-    website: "https://www.pia.edu"
+    website: "https://www.pia.edu",
+    annualGraduates: 320,
+    programSpecializations: "Airframe, Powerplant, Avionics, Electronics",
+    placementRate: 94,
+    accreditation: "FAA Part 147, ACCSC"
   },
   {
     id: 4,
@@ -60,7 +72,11 @@ export const staticSchools: School[] = [
     email: "aviation@alamo.edu",
     phone: "210-486-2900",
     poc: "Maria Garcia",
-    website: "https://www.alamo.edu/spc"
+    website: "https://www.alamo.edu/spc",
+    annualGraduates: 85,
+    programSpecializations: "Airframe, Powerplant",
+    placementRate: 87,
+    accreditation: "FAA Part 147, SACSCOC"
   },
   {
     id: 5,
@@ -75,7 +91,11 @@ export const staticSchools: School[] = [
     email: "aviation@hccfl.edu",
     phone: "813-253-7000",
     poc: "David Williams",
-    website: "https://www.hccfl.edu"
+    website: "https://www.hccfl.edu",
+    annualGraduates: 120,
+    programSpecializations: "Airframe, Powerplant, Avionics",
+    placementRate: 91,
+    accreditation: "FAA Part 147, SACSCOC"
   },
   {
     id: 6,
@@ -90,7 +110,11 @@ export const staticSchools: School[] = [
     email: "aviation@purdue.edu",
     phone: "765-494-5782",
     poc: "Jennifer Thompson",
-    website: "https://www.purdue.edu/aviation"
+    website: "https://www.purdue.edu/aviation",
+    annualGraduates: 180,
+    programSpecializations: "Aviation Management, Flight, Aerospace Engineering",
+    placementRate: 96,
+    accreditation: "AABI, HLC"
   },
   {
     id: 7,
@@ -105,7 +129,11 @@ export const staticSchools: School[] = [
     email: "admissions@erau.edu",
     phone: "386-226-6100",
     poc: "Robert Martinez",
-    website: "https://www.erau.edu"
+    website: "https://www.erau.edu",
+    annualGraduates: 1200,
+    programSpecializations: "Aerospace Engineering, Aviation Maintenance, Avionics, Flight",
+    placementRate: 97,
+    accreditation: "AABI, SACSCOC, ABET"
   },
   {
     id: 8,
@@ -120,7 +148,11 @@ export const staticSchools: School[] = [
     email: "aviation@asu.edu",
     phone: "480-727-1585",
     poc: "Lisa Chen",
-    website: "https://poly.engineering.asu.edu"
+    website: "https://poly.engineering.asu.edu",
+    annualGraduates: 150,
+    programSpecializations: "Aviation Management, UAS, Air Traffic Management",
+    placementRate: 93,
+    accreditation: "AABI, HLC"
   },
   {
     id: 9,
@@ -135,7 +167,11 @@ export const staticSchools: School[] = [
     email: "aerospace@mtsu.edu",
     phone: "615-898-2788",
     poc: "Christopher Lee",
-    website: "https://www.mtsu.edu/aerospace"
+    website: "https://www.mtsu.edu/aerospace",
+    annualGraduates: 200,
+    programSpecializations: "Aerospace, Aviation Administration, Maintenance Management",
+    placementRate: 91,
+    accreditation: "AABI, SACSCOC"
   },
   {
     id: 10,
@@ -150,7 +186,11 @@ export const staticSchools: School[] = [
     email: "admissions@vaughn.edu",
     phone: "718-429-6600",
     poc: "Anthony Brown",
-    website: "https://www.vaughn.edu"
+    website: "https://www.vaughn.edu",
+    annualGraduates: 250,
+    programSpecializations: "Airframe, Powerplant, Avionics, Engineering",
+    placementRate: 95,
+    accreditation: "FAA Part 147, MSCHE"
   },
   {
     id: 11,
@@ -165,7 +205,11 @@ export const staticSchools: School[] = [
     email: "aviation@emilygriffith.edu",
     phone: "720-423-4700",
     poc: "Patricia Davis",
-    website: "https://www.emilygriffith.edu"
+    website: "https://www.emilygriffith.edu",
+    annualGraduates: 65,
+    programSpecializations: "Airframe, Powerplant",
+    placementRate: 88,
+    accreditation: "FAA Part 147, COE"
   },
   {
     id: 12,
@@ -180,7 +224,11 @@ export const staticSchools: School[] = [
     email: "aviation@stow.k12.oh.us",
     phone: "330-689-5445",
     poc: "James Wilson",
-    website: "https://www.stow.k12.oh.us"
+    website: "https://www.stow.k12.oh.us",
+    annualGraduates: 25,
+    programSpecializations: "Aviation Fundamentals, Pre-A&P",
+    placementRate: 85,
+    accreditation: "Ohio Dept of Education"
   },
   {
     id: 13,
@@ -195,7 +243,11 @@ export const staticSchools: School[] = [
     email: "info@aviationhs.net",
     phone: "718-786-0110",
     poc: "Nancy Taylor",
-    website: "https://www.aviationhs.net"
+    website: "https://www.aviationhs.net",
+    annualGraduates: 180,
+    programSpecializations: "Aviation Fundamentals, FAA Ground School",
+    placementRate: 82,
+    accreditation: "NYC DOE, FAA Knowledge Testing Center"
   },
   {
     id: 14,
@@ -210,7 +262,11 @@ export const staticSchools: School[] = [
     email: "aviation@bcps.k12.mi.us",
     phone: "269-965-9500",
     poc: "Thomas Moore",
-    website: "https://www.bcps.k12.mi.us"
+    website: "https://www.bcps.k12.mi.us",
+    annualGraduates: 30,
+    programSpecializations: "Aviation Fundamentals, Drone Technology",
+    placementRate: 80,
+    accreditation: "Michigan Dept of Education"
   },
   {
     id: 15,
@@ -225,7 +281,11 @@ export const staticSchools: School[] = [
     email: "info@coloradoaero.org",
     phone: "303-708-1855",
     poc: "Sandra Jackson",
-    website: "https://www.coloradoaero.org"
+    website: "https://www.coloradoaero.org",
+    annualGraduates: 40,
+    programSpecializations: "Private Pilot Ground, Aviation STEM",
+    placementRate: 78,
+    accreditation: "Colorado Dept of Education"
   }
 ];
 
@@ -417,7 +477,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "402-475-2611",
     poc: "Robert Duncan",
     website: "https://www.duncanaviation.com",
-    certifications: "CRS DKSR172D"
+    certifications: "CRS DKSR172D",
+    employeeCount: 2300,
+    hiringNow: true,
+    offersInternships: true,
+    typicalPositions: "A&P Mechanics, Avionics Technicians, Sheet Metal"
   },
   {
     id: 2,
@@ -433,7 +497,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "316-440-2600",
     poc: "Sarah Johnson",
     website: "https://www.standardaero.com",
-    certifications: "CRS STAS245K"
+    certifications: "CRS STAS245K",
+    employeeCount: 7500,
+    hiringNow: true,
+    offersInternships: true,
+    typicalPositions: "Engine Technicians, Avionics, Component Repair"
   },
   {
     id: 3,
@@ -449,7 +517,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "208-389-9658",
     poc: "Mike Anderson",
     website: "https://www.asu.aero",
-    certifications: "CRS ASUR561L"
+    certifications: "CRS ASUR561L",
+    employeeCount: 85,
+    hiringNow: false,
+    offersInternships: true,
+    typicalPositions: "NVG Technicians, Avionics Installers"
   },
   {
     id: 4,
@@ -465,7 +537,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "630-227-2000",
     poc: "Jennifer Smith",
     website: "https://www.aarcorp.com",
-    certifications: "CRS AARR982C"
+    certifications: "CRS AARR982C",
+    employeeCount: 6000,
+    hiringNow: true,
+    offersInternships: true,
+    typicalPositions: "A&P Mechanics, Structures, Landing Gear Specialists"
   },
   {
     id: 5,
@@ -481,7 +557,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "316-517-6000",
     poc: "David Martinez",
     website: "https://www.txtav.com",
-    certifications: "CRS TXTV123A"
+    certifications: "CRS TXTV123A",
+    employeeCount: 10000,
+    hiringNow: true,
+    offersInternships: true,
+    typicalPositions: "Assembly Technicians, Quality Inspectors, Engineers"
   },
   {
     id: 6,
@@ -497,7 +577,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "608-759-3601",
     poc: "Lisa Thompson",
     website: "https://www.flyingcolors.aero",
-    certifications: "CRS FLCR443B"
+    certifications: "CRS FLCR443B",
+    employeeCount: 120,
+    hiringNow: true,
+    offersInternships: false,
+    typicalPositions: "Interior Technicians, Completions Specialists"
   },
   {
     id: 7,
@@ -513,7 +597,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "201-288-3700",
     poc: "Michael Chen",
     website: "https://www.jetaviation.com",
-    certifications: "CRS JTAV789D"
+    certifications: "CRS JTAV789D",
+    employeeCount: 450,
+    hiringNow: true,
+    offersInternships: true,
+    typicalPositions: "A&P Mechanics, Avionics, Line Service"
   },
   {
     id: 8,
@@ -529,7 +617,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "970-243-7600",
     poc: "Amanda Foster",
     website: "https://www.weststaraviation.com",
-    certifications: "CRS WSTR334E"
+    certifications: "CRS WSTR334E",
+    employeeCount: 900,
+    hiringNow: true,
+    offersInternships: true,
+    typicalPositions: "Paint Technicians, Interiors, A&P Mechanics"
   },
   {
     id: 9,
@@ -545,7 +637,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "912-965-3000",
     poc: "Mark Williams",
     website: "https://www.gulfstream.com",
-    certifications: "CRS GLFM567F"
+    certifications: "CRS GLFM567F",
+    employeeCount: 13000,
+    hiringNow: true,
+    offersInternships: true,
+    typicalPositions: "Manufacturing Technicians, Engineers, Quality"
   },
   {
     id: 10,
@@ -561,7 +657,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "407-855-0451",
     poc: "Patricia Lee",
     website: "https://www.signatureaviation.com",
-    certifications: "CRS SIGN891G"
+    certifications: "CRS SIGN891G",
+    employeeCount: 350,
+    hiringNow: false,
+    offersInternships: true,
+    typicalPositions: "Line Service, A&P Mechanics, Customer Service"
   },
   {
     id: 11,
@@ -577,7 +677,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "954-359-3700",
     poc: "Robert Garcia",
     website: "https://www.embraer.com",
-    certifications: "CRS EMBR223H"
+    certifications: "CRS EMBR223H",
+    employeeCount: 800,
+    hiringNow: true,
+    offersInternships: true,
+    typicalPositions: "Avionics Technicians, Composite Repair, Engineers"
   },
   {
     id: 12,
@@ -593,7 +697,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "864-877-8700",
     poc: "Emily Rodriguez",
     website: "https://www.stevensaerospace.com",
-    certifications: "CRS STEV445I"
+    certifications: "CRS STEV445I",
+    employeeCount: 400,
+    hiringNow: true,
+    offersInternships: true,
+    typicalPositions: "A&P Mechanics, Avionics Installers, Inspectors"
   },
   {
     id: 13,
@@ -609,7 +717,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "804-222-5200",
     poc: "James Parker",
     website: "https://www.constantaviation.com",
-    certifications: "CRS CNST667J"
+    certifications: "CRS CNST667J",
+    employeeCount: 600,
+    hiringNow: false,
+    offersInternships: true,
+    typicalPositions: "AOG Technicians, A&P Mechanics, Avionics"
   },
   {
     id: 14,
@@ -625,7 +737,11 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "305-233-4359",
     poc: "Michelle Davis",
     website: "https://www.premierjet.com",
-    certifications: "CRS PRMJ778K"
+    certifications: "CRS PRMJ778K",
+    employeeCount: 75,
+    hiringNow: true,
+    offersInternships: false,
+    typicalPositions: "A&P Mechanics, Avionics Technicians"
   },
   {
     id: 15,
@@ -641,6 +757,10 @@ export const staticAEAMembers: AEAMember[] = [
     phone: "925-443-3600",
     poc: "Daniel Wilson",
     website: "https://www.pcavionics.com",
-    certifications: "CRS PCAV889L"
+    certifications: "CRS PCAV889L",
+    employeeCount: 45,
+    hiringNow: false,
+    offersInternships: true,
+    typicalPositions: "Avionics Technicians, Bench Repair Specialists"
   }
 ];

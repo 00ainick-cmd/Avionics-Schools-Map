@@ -12,6 +12,11 @@ export interface School {
   phone?: string;
   poc?: string;
   website?: string;
+  // HR fields
+  annualGraduates?: number;
+  programSpecializations?: string;
+  placementRate?: number;
+  accreditation?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -51,6 +56,11 @@ export interface AEAMember {
   poc?: string;
   website?: string;
   certifications?: string;
+  // HR fields
+  employeeCount?: number;
+  hiringNow?: boolean;
+  offersInternships?: boolean;
+  typicalPositions?: string;
   createdAt?: string;
   updatedAt?: string;
 }

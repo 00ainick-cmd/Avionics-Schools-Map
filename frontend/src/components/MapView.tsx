@@ -35,28 +35,47 @@ interface Props {
 }
 
 // Custom marker icons
-const createMarkerIcon = (color: string, symbol: string) => {
+const createMarkerIcon = (color: string, symbol: string, hasHiringBadge = false) => {
+  const badgeHtml = hasHiringBadge ? `
+    <div style="
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: #DC2626;
+      color: white;
+      font-size: 8px;
+      font-weight: bold;
+      padding: 2px 4px;
+      border-radius: 4px;
+      border: 1px solid white;
+      white-space: nowrap;
+    ">HIRING</div>
+  ` : '';
+
   return L.divIcon({
     className: 'custom-marker',
     html: `
-      <div style="
-        background-color: ${color};
-        width: 32px;
-        height: 32px;
-        border-radius: 50% 50% 50% 0;
-        transform: rotate(-45deg);
-        border: 2px solid white;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      ">
+      <div style="position: relative;">
+        ${badgeHtml}
         <div style="
-          transform: rotate(45deg);
-          color: white;
-          font-weight: bold;
-          font-size: 16px;
-        ">${symbol}</div>
+          background-color: ${color};
+          width: 32px;
+          height: 32px;
+          border-radius: 50% 50% 50% 0;
+          transform: rotate(-45deg);
+          border: 2px solid white;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        ">
+          <div style="
+            transform: rotate(45deg);
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+          ">${symbol}</div>
+        </div>
       </div>
     `,
     iconSize: [32, 32],
@@ -88,7 +107,6 @@ const referencePointIcon = L.divIcon({
 
 const schoolIcon = createMarkerIcon('#3B82F6', 'S');
 const militaryIcon = createMarkerIcon('#EF4444', 'M');
-const aeaIcon = createMarkerIcon('#10B981', 'A');
 
 // Get school type color
 const getSchoolColor = (type: School['type']) => {
@@ -106,6 +124,23 @@ const formatDistance = (distance: number | null): string => {
   if (distance === null) return '';
   if (distance < 1) return `${(distance * 5280).toFixed(0)} ft`;
   return `${distance.toFixed(1)} mi`;
+};
+
+// Generate request info email link
+const generateEmailLink = (entity: School | MilitaryBase | AEAMember, type: 'school' | 'military' | 'aea') => {
+  const subject = encodeURIComponent(`Information Request: ${entity.name}`);
+  let body = '';
+
+  if (type === 'school') {
+    body = encodeURIComponent(`Dear ${entity.poc || 'Admissions Team'},\n\nI am interested in learning more about ${entity.name} and your aviation programs.\n\nPlease send me information about:\n- Program curriculum and duration\n- Enrollment requirements\n- Tuition and financial aid options\n- Job placement assistance\n\nThank you for your time.\n\nBest regards,\n[Your Name]\n[Your Contact Information]`);
+  } else if (type === 'aea') {
+    const member = entity as AEAMember;
+    body = encodeURIComponent(`Dear ${entity.poc || 'Hiring Manager'},\n\nI am interested in ${member.hiringNow ? 'employment opportunities' : 'learning more about career opportunities'} at ${entity.name}.\n\nI would like to discuss:\n- Current or future job openings\n${member.offersInternships ? '- Internship programs\n' : ''}- Required qualifications and experience\n- Application process\n\nThank you for your time.\n\nBest regards,\n[Your Name]\n[Your Contact Information]`);
+  } else {
+    body = encodeURIComponent(`Dear ${entity.poc || 'Information Office'},\n\nI am interested in learning more about aviation opportunities at ${entity.name}.\n\nPlease send me information about available programs and resources.\n\nThank you for your time.\n\nBest regards,\n[Your Name]\n[Your Contact Information]`);
+  }
+
+  return `mailto:${entity.email}?subject=${subject}&body=${body}`;
 };
 
 // Component to handle map view changes
@@ -272,12 +307,12 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters, r
             const school = marker.data as SchoolWithDistance;
             icon = createMarkerIcon(getSchoolColor(school.type), 'S');
             popupContent = (
-              <div className="p-2 min-w-[250px]">
+              <div className="p-2 min-w-[280px] max-w-[320px]">
                 <h3 className="font-bold text-lg mb-2 text-gray-800">{school.name}</h3>
                 {school.distance !== null && (
-                  <p className="text-sm font-semibold text-blue-600 mb-2 bg-blue-50 px-2 py-1 rounded inline-block">
+                  <span className="text-sm font-semibold text-blue-600 mb-2 bg-blue-50 px-2 py-1 rounded inline-block mr-2">
                     {formatDistance(school.distance)} away
-                  </p>
+                  </span>
                 )}
                 <p className="text-sm text-gray-600 mb-2">
                   <span className="font-semibold">Type:</span> {school.type}
@@ -287,17 +322,35 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters, r
                   {school.address}<br />
                   {school.city}, {school.state} {school.zipCode}
                 </p>
+
+                {/* HR Info Section */}
+                <div className="bg-purple-50 rounded p-2 mb-2">
+                  <p className="text-xs font-semibold text-purple-800 mb-1">Program Info</p>
+                  {school.annualGraduates && (
+                    <p className="text-xs text-gray-700">
+                      <span className="font-medium">Annual Graduates:</span> {school.annualGraduates}
+                    </p>
+                  )}
+                  {school.placementRate && (
+                    <p className="text-xs text-gray-700">
+                      <span className="font-medium">Placement Rate:</span> {school.placementRate}%
+                    </p>
+                  )}
+                  {school.programSpecializations && (
+                    <p className="text-xs text-gray-700">
+                      <span className="font-medium">Programs:</span> {school.programSpecializations}
+                    </p>
+                  )}
+                  {school.accreditation && (
+                    <p className="text-xs text-gray-700">
+                      <span className="font-medium">Accreditation:</span> {school.accreditation}
+                    </p>
+                  )}
+                </div>
+
                 {school.poc && (
                   <p className="text-sm text-gray-600 mb-1">
                     <span className="font-semibold">Contact:</span> {school.poc}
-                  </p>
-                )}
-                {school.email && (
-                  <p className="text-sm text-gray-600 mb-1">
-                    <span className="font-semibold">Email:</span>{' '}
-                    <a href={`mailto:${school.email}`} className="text-blue-600 hover:underline">
-                      {school.email}
-                    </a>
                   </p>
                 )}
                 {school.phone && (
@@ -308,30 +361,40 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters, r
                     </a>
                   </p>
                 )}
-                {school.website && (
-                  <p className="text-sm text-gray-600 mb-1">
+
+                {/* Action Buttons */}
+                <div className="flex gap-2 mt-3 pt-2 border-t border-gray-200">
+                  {school.email && (
+                    <a
+                      href={generateEmailLink(school, 'school')}
+                      className="flex-1 text-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700"
+                    >
+                      Request Info
+                    </a>
+                  )}
+                  {school.website && (
                     <a
                       href={school.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
+                      className="flex-1 text-center px-3 py-2 bg-gray-200 text-gray-800 text-sm font-medium rounded hover:bg-gray-300"
                     >
-                      Visit Website
+                      Website
                     </a>
-                  </p>
-                )}
+                  )}
+                </div>
               </div>
             );
           } else if (marker.type === 'military') {
             const base = marker.data as MilitaryBaseWithDistance;
             icon = militaryIcon;
             popupContent = (
-              <div className="p-2 min-w-[250px]">
+              <div className="p-2 min-w-[280px] max-w-[320px]">
                 <h3 className="font-bold text-lg mb-2 text-gray-800">{base.name}</h3>
                 {base.distance !== null && (
-                  <p className="text-sm font-semibold text-red-600 mb-2 bg-red-50 px-2 py-1 rounded inline-block">
+                  <span className="text-sm font-semibold text-red-600 mb-2 bg-red-50 px-2 py-1 rounded inline-block">
                     {formatDistance(base.distance)} away
-                  </p>
+                  </span>
                 )}
                 <p className="text-sm text-gray-600 mb-2">
                   <span className="font-semibold">Branch:</span> {base.branch}
@@ -341,17 +404,14 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters, r
                   {base.address}<br />
                   {base.city}, {base.state} {base.zipCode}
                 </p>
+                {base.hasAvionicsTechs && (
+                  <p className="text-xs text-green-700 bg-green-50 px-2 py-1 rounded inline-block mb-2">
+                    Has Avionics Technicians
+                  </p>
+                )}
                 {base.poc && (
                   <p className="text-sm text-gray-600 mb-1">
                     <span className="font-semibold">Contact:</span> {base.poc}
-                  </p>
-                )}
-                {base.email && (
-                  <p className="text-sm text-gray-600 mb-1">
-                    <span className="font-semibold">Email:</span>{' '}
-                    <a href={`mailto:${base.email}`} className="text-blue-600 hover:underline">
-                      {base.email}
-                    </a>
                   </p>
                 )}
                 {base.phone && (
@@ -362,42 +422,47 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters, r
                     </a>
                   </p>
                 )}
-                {base.website && (
-                  <p className="text-sm text-gray-600 mb-1">
+
+                {/* Action Buttons */}
+                <div className="flex gap-2 mt-3 pt-2 border-t border-gray-200">
+                  {base.email && (
+                    <a
+                      href={generateEmailLink(base, 'military')}
+                      className="flex-1 text-center px-3 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700"
+                    >
+                      Request Info
+                    </a>
+                  )}
+                  {base.website && (
                     <a
                       href={base.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
+                      className="flex-1 text-center px-3 py-2 bg-gray-200 text-gray-800 text-sm font-medium rounded hover:bg-gray-300"
                     >
-                      Visit Website
+                      Website
                     </a>
-                  </p>
-                )}
-                {base.readinessCenterUrl && (
-                  <p className="text-sm text-gray-600 mb-1">
-                    <a
-                      href={base.readinessCenterUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
-                    >
-                      Family Readiness Center
-                    </a>
-                  </p>
-                )}
+                  )}
+                </div>
               </div>
             );
           } else {
             const member = marker.data as AEAMemberWithDistance;
-            icon = aeaIcon;
+            icon = createMarkerIcon('#10B981', 'A', member.hiringNow);
             popupContent = (
-              <div className="p-2 min-w-[250px]">
-                <h3 className="font-bold text-lg mb-2 text-gray-800">{member.name}</h3>
+              <div className="p-2 min-w-[280px] max-w-[320px]">
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="font-bold text-lg text-gray-800">{member.name}</h3>
+                  {member.hiringNow && (
+                    <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                      HIRING
+                    </span>
+                  )}
+                </div>
                 {member.distance !== null && (
-                  <p className="text-sm font-semibold text-green-600 mb-2 bg-green-50 px-2 py-1 rounded inline-block">
+                  <span className="text-sm font-semibold text-green-600 mb-2 bg-green-50 px-2 py-1 rounded inline-block">
                     {formatDistance(member.distance)} away
-                  </p>
+                  </span>
                 )}
                 <p className="text-sm text-gray-600 mb-2">
                   <span className="font-semibold">Type:</span> {member.shopType}
@@ -407,6 +472,27 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters, r
                   {member.address}<br />
                   {member.city}, {member.state} {member.zipCode}
                 </p>
+
+                {/* HR Info Section */}
+                <div className="bg-green-50 rounded p-2 mb-2">
+                  <p className="text-xs font-semibold text-green-800 mb-1">Company Info</p>
+                  {member.employeeCount && (
+                    <p className="text-xs text-gray-700">
+                      <span className="font-medium">Employees:</span> {member.employeeCount.toLocaleString()}
+                    </p>
+                  )}
+                  {member.offersInternships && (
+                    <p className="text-xs text-blue-700">
+                      Offers Internships
+                    </p>
+                  )}
+                  {member.typicalPositions && (
+                    <p className="text-xs text-gray-700">
+                      <span className="font-medium">Positions:</span> {member.typicalPositions}
+                    </p>
+                  )}
+                </div>
+
                 {member.certifications && (
                   <p className="text-sm text-gray-600 mb-2">
                     <span className="font-semibold">Certifications:</span> {member.certifications}
@@ -417,14 +503,6 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters, r
                     <span className="font-semibold">Contact:</span> {member.poc}
                   </p>
                 )}
-                {member.email && (
-                  <p className="text-sm text-gray-600 mb-1">
-                    <span className="font-semibold">Email:</span>{' '}
-                    <a href={`mailto:${member.email}`} className="text-blue-600 hover:underline">
-                      {member.email}
-                    </a>
-                  </p>
-                )}
                 {member.phone && (
                   <p className="text-sm text-gray-600 mb-1">
                     <span className="font-semibold">Phone:</span>{' '}
@@ -433,18 +511,28 @@ export default function MapView({ schools, militaryBases, aeaMembers, filters, r
                     </a>
                   </p>
                 )}
-                {member.website && (
-                  <p className="text-sm text-gray-600 mb-1">
+
+                {/* Action Buttons */}
+                <div className="flex gap-2 mt-3 pt-2 border-t border-gray-200">
+                  {member.email && (
+                    <a
+                      href={generateEmailLink(member, 'aea')}
+                      className="flex-1 text-center px-3 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700"
+                    >
+                      {member.hiringNow ? 'Apply Now' : 'Request Info'}
+                    </a>
+                  )}
+                  {member.website && (
                     <a
                       href={member.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
+                      className="flex-1 text-center px-3 py-2 bg-gray-200 text-gray-800 text-sm font-medium rounded hover:bg-gray-300"
                     >
-                      Visit Website
+                      Website
                     </a>
-                  </p>
-                )}
+                  )}
+                </div>
               </div>
             );
           }
